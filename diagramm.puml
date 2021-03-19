@@ -1,0 +1,362 @@
+@startuml
+set namespaceSeparator ::
+
+class "driver::arguments::passToEditArgs.dart::PassToEditArgs" {
+  +AuthFunc auth
+  +String userId
+  +String name
+  +String email
+}
+
+"driver::arguments::passToEditArgs.dart::PassToEditArgs" o-- "driver::services::firebaseAuthUtils.dart::AuthFunc"
+
+class "driver::arguments::passToSensorsArgs.dart::PassToSensorsArgs" {
+  +AuthFunc auth
+  +String userId
+}
+
+"driver::arguments::passToSensorsArgs.dart::PassToSensorsArgs" o-- "driver::services::firebaseAuthUtils.dart::AuthFunc"
+
+class "driver::arguments::passToTripAnalysArgs.dart::PassToTripAnalysArgs" {
+  +AuthFunc auth
+  +String userId
+  +int weaving
+  +int swerving
+  +int fastUTurn
+  +int suddenBraking
+}
+
+"driver::arguments::passToTripAnalysArgs.dart::PassToTripAnalysArgs" o-- "driver::services::firebaseAuthUtils.dart::AuthFunc"
+
+class "driver::constants::constants.dart::Constants" {
+  {static} +String SIGN_OUT
+  {static} +List<String> choices
+}
+
+class "driver::enums::enums.dart::AuthStatus" {
+  +int index
+  {static} +List<AuthStatus> values
+  {static} +AuthStatus NOT_LOGGED_IN
+  {static} +AuthStatus NOT_DETERMINED
+  {static} +AuthStatus LOGGED_IN
+}
+
+"driver::enums::enums.dart::AuthStatus" o-- "driver::enums::enums.dart::AuthStatus"
+
+class "driver::enums::enums.dart::FormType" {
+  +int index
+  {static} +List<FormType> values
+  {static} +FormType SIGN_IN
+  {static} +FormType SIGN_UP
+  {static} +FormType RESET
+}
+
+"driver::enums::enums.dart::FormType" o-- "driver::enums::enums.dart::FormType"
+
+class "driver::icons::custom_icons_icons.dart::CustomIcons" {
+  {static} -String _kFontFam
+  {static} +IconData person
+  {static} +IconData edit
+  {static} +IconData camera
+  {static} +IconData bar
+}
+
+"driver::icons::custom_icons_icons.dart::CustomIcons" o-- "flutter::src::widgets::icon_data.dart::IconData"
+
+class "driver::main.dart::MyApp" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "driver::main.dart::MyApp"
+
+class "driver::main.dart::AppSplash" {
+  +_AppSplashState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "driver::main.dart::AppSplash"
+
+class "driver::main.dart::_AppSplashState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State<T>" <|-- "driver::main.dart::_AppSplashState"
+
+class "driver::main.dart::MyAppHome" {
+  +AuthFunc auth
+  +_MyAppHomeState createState()
+}
+
+"driver::main.dart::MyAppHome" o-- "driver::services::firebaseAuthUtils.dart::AuthFunc"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "driver::main.dart::MyAppHome"
+
+class "driver::main.dart::_MyAppHomeState" {
+  +AuthStatus authStatus
+  -String _userId
+  +void initState()
+  +Widget build()
+  -void _onSignedIn()
+  -void _onSignedOut()
+}
+
+"driver::main.dart::_MyAppHomeState" o-- "driver::enums::enums.dart::AuthStatus"
+"flutter::src::widgets::framework.dart::State<T>" <|-- "driver::main.dart::_MyAppHomeState"
+
+class "driver::pages::editPage.dart::EditPage" {
+  {static} +String routeName
+  +_EditPageState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "driver::pages::editPage.dart::EditPage"
+
+class "driver::pages::editPage.dart::_EditPageState" {
+  -GlobalKey<FormState> _formKey
+  -bool _isLoading
+  -bool _isIos
+  -String _errorMessage
+  -String _newEmail
+  -String _newName
+  -bool _validateAndSave()
+  -Future _validateAndSubmit()
+  -void _updateName()
+  -void _updateEmail()
+  +void initState()
+  +Widget build()
+  +dynamic showBody()
+  +String validateEmail()
+  +dynamic showCircularProgress()
+  +Widget showButton()
+}
+
+"driver::pages::editPage.dart::_EditPageState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"flutter::src::widgets::framework.dart::State<T>" <|-- "driver::pages::editPage.dart::_EditPageState"
+
+class "driver::pages::homePage.dart::HomePage" {
+  +AuthFunc auth
+  +void Function() onSignedOut
+  +String userId
+  +_HomePageState createState()
+}
+
+"driver::pages::homePage.dart::HomePage" o-- "driver::services::firebaseAuthUtils.dart::AuthFunc"
+"driver::pages::homePage.dart::HomePage" o-- "dart::ui::void Function()"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "driver::pages::homePage.dart::HomePage"
+
+class "driver::pages::homePage.dart::_HomePageState" {
+  -bool _isEmailVerified
+  +void initState()
+  +Widget build()
+  -void _checkEmailVerification()
+  -void _showVerifyEmailDialog()
+  -void _sendVerifyEmail()
+  -void _showVerifyEmailSentDialog()
+  -void _signOut()
+  -void _choiceAction()
+}
+
+"flutter::src::widgets::framework.dart::State<T>" <|-- "driver::pages::homePage.dart::_HomePageState"
+
+class "driver::pages::profilePage.dart::ProfilePage" {
+  +AuthFunc auth
+  +void Function() onSignedOut
+  +String userId
+  +_ProfilePageState createState()
+}
+
+"driver::pages::profilePage.dart::ProfilePage" o-- "driver::services::firebaseAuthUtils.dart::AuthFunc"
+"driver::pages::profilePage.dart::ProfilePage" o-- "dart::ui::void Function()"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "driver::pages::profilePage.dart::ProfilePage"
+
+class "driver::pages::profilePage.dart::_ProfilePageState" {
+  +GlobalKey<FormState> formKey
+  -String _name
+  -String _email
+  -bool _darkTheme
+  -bool _autoSave
+  +File imageFile
+  +dynamic imageUrl
+  +void initState()
+  -dynamic _uploadImage()
+  +Widget build()
+  -void _navigate()
+  -void _signOut()
+  -void _choiceAction()
+}
+
+"driver::pages::profilePage.dart::_ProfilePageState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"driver::pages::profilePage.dart::_ProfilePageState" o-- "dart::io::File"
+"flutter::src::widgets::framework.dart::State<T>" <|-- "driver::pages::profilePage.dart::_ProfilePageState"
+
+class "driver::pages::sensorsPage.dart::SensorsPage" {
+  {static} +String routeName
+  +_SensorsPageState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "driver::pages::sensorsPage.dart::SensorsPage"
+
+class "driver::pages::sensorsPage.dart::_SensorsPageState" {
+  -List<double> _accelerometerValues
+  -List<double> _gyroscopeValues
+  -List<double> _accelerometerXValues
+  -List<double> _accelerometerYValues
+  -List<double> _gyroscopeXValues
+  -List<double> _gyroscopeYValues
+  -List<StreamSubscription> _streamSubscriptions
+  -List<Map<String, dynamic>> _data
+  -Timer _timerToSave
+  -int _secs
+  +int period
+  -int _weaving
+  -int _swerving
+  -int _suddenBraking
+  -int _fastUTurn
+  +List<int> allTripAbnormal
+  +DateTime startTime
+  +DateTime endTime
+  -bool _autoSave
+  -int _convertValuesToPoints()
+  -int _getAverage()
+  -void _saveDataToDB()
+  +void dispose()
+  +void initState()
+  +Widget build()
+  +double roundDouble()
+  +double mean()
+  +double stDeviation()
+  -Future _analysData()
+  -Future _analysDataFromDB()
+  +String classifyAbnormal()
+  +Future showProfile()
+  +Widget getProfile()
+  +List smoothingSMAUnknown()
+  -dynamic _makeTemplate()
+}
+
+"driver::pages::sensorsPage.dart::_SensorsPageState" o-- "dart::async::Timer"
+"flutter::src::widgets::framework.dart::State<T>" <|-- "driver::pages::sensorsPage.dart::_SensorsPageState"
+
+class "driver::pages::signIn_signUp_Page.dart::SignInSignUpPage" {
+  +AuthFunc auth
+  +void Function() onSignedIn
+  +_SignInSignUpPageState createState()
+}
+
+"driver::pages::signIn_signUp_Page.dart::SignInSignUpPage" o-- "driver::services::firebaseAuthUtils.dart::AuthFunc"
+"driver::pages::signIn_signUp_Page.dart::SignInSignUpPage" o-- "dart::ui::void Function()"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "driver::pages::signIn_signUp_Page.dart::SignInSignUpPage"
+
+class "driver::pages::signIn_signUp_Page.dart::_SignInSignUpPageState" {
+  -GlobalKey<FormState> _formKey
+  -String _email
+  -String _password
+  -String _errorMessage
+  -String _name
+  -bool _isIos
+  -bool _isLoading
+  -bool _isSignInForm
+  -bool _isResetForm
+  -bool _showForgotPassword
+  -bool _obscurePassword
+  -dynamic _width
+  -dynamic _height
+  -bool _validateAndSave()
+  -Future _validateAndSubmit()
+  +void initState()
+  +void toggleForm()
+  +Widget build()
+  -void _showVerifyEmailSentDialog()
+  +dynamic showCircularProgress()
+  +dynamic showBody()
+  -Widget _showErrorMessage()
+  -Widget _showSecondaryButton()
+  -Widget _showButton()
+  -dynamic _showPasswordInput()
+  -Widget _showForgotPasswordButton()
+  -dynamic _showEmailInput()
+  -dynamic _showNameInput()
+  -dynamic _showText()
+  -dynamic _showLogo()
+}
+
+"driver::pages::signIn_signUp_Page.dart::_SignInSignUpPageState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"flutter::src::widgets::framework.dart::State<T>" <|-- "driver::pages::signIn_signUp_Page.dart::_SignInSignUpPageState"
+
+class "driver::pages::statisticPage.dart::StatisticPage" {
+  +AuthFunc auth
+  +void Function() onSignedOut
+  +String userId
+  +_StatisticPageState createState()
+}
+
+"driver::pages::statisticPage.dart::StatisticPage" o-- "driver::services::firebaseAuthUtils.dart::AuthFunc"
+"driver::pages::statisticPage.dart::StatisticPage" o-- "dart::ui::void Function()"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "driver::pages::statisticPage.dart::StatisticPage"
+
+class "driver::pages::statisticPage.dart::_StatisticPageState" {
+  +GlobalKey<FormState> formKey
+  -List<int> _isClicked
+  +void initState()
+  -void _checkIsClicked()
+  +Color getColor()
+  -dynamic _sortList()
+  +Widget build()
+  -void _signOut()
+  -void _choiceAction()
+  +Widget cardMore()
+}
+
+"driver::pages::statisticPage.dart::_StatisticPageState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"flutter::src::widgets::framework.dart::State<T>" <|-- "driver::pages::statisticPage.dart::_StatisticPageState"
+"flutter::src::widgets::ticker_provider.dart::TickerProviderStateMixin<T>" <|-- "driver::pages::statisticPage.dart::_StatisticPageState"
+
+class "driver::pages::tripAnalysPage.dart::TripAnalysPage" {
+  {static} +String routeName
+  +_TripAnalysPageState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "driver::pages::tripAnalysPage.dart::TripAnalysPage"
+
+class "driver::pages::tripAnalysPage.dart::_TripAnalysPageState" {
+  +DateTime startTime
+  +DateTime endTime
+  +void initState()
+  +void dispose()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State<T>" <|-- "driver::pages::tripAnalysPage.dart::_TripAnalysPageState"
+
+abstract class "driver::services::firebaseAuthUtils.dart::AuthFunc" {
+  +Future signIn()
+  +Future signUp()
+  +Future getCurrentUser()
+  +Future sendEmailVerification()
+  +Future signOut()
+  +Future sendPasswordResetEmail()
+  +Future isEmailVerified()
+}
+
+class "driver::services::firebaseAuthUtils.dart::MyAuth" {
+  -FirebaseAuth _firebaseAuth
+  +Future getCurrentUser()
+  +Future sendEmailVerification()
+  +Future signOut()
+  +Future sendPasswordResetEmail()
+  +Future signIn()
+  +Future signUp()
+  +Future isEmailVerified()
+}
+
+"driver::services::firebaseAuthUtils.dart::MyAuth" o-- "firebase_auth::firebase_auth.dart::FirebaseAuth"
+"driver::services::firebaseAuthUtils.dart::AuthFunc" <|-- "driver::services::firebaseAuthUtils.dart::MyAuth"
+
+class "driver::services::themeNotifier.dart::ThemeNotifier" {
+  -ThemeData _themeData
+  +dynamic getTheme()
+  +dynamic setTheme()
+}
+
+"driver::services::themeNotifier.dart::ThemeNotifier" o-- "flutter::src::material::theme_data.dart::ThemeData"
+"flutter::src::foundation::change_notifier.dart::ChangeNotifier" <|-- "driver::services::themeNotifier.dart::ThemeNotifier"
+
+
+@enduml

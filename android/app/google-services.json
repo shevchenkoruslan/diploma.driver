@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1041239325125",
+    "project_id": "driver-df36d",
+    "storage_bucket": "driver-df36d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1041239325125:android:2fbbbec98ca8543a85f3ac",
+        "android_client_info": {
+          "package_name": "com.example.driver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1041239325125-qf85tbrva4sitfu2re5vrsfj1jppqkma.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDs_P6TLkptoAZU3NB4XXPaKW7qN3PfCZ4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1041239325125-qf85tbrva4sitfu2re5vrsfj1jppqkma.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

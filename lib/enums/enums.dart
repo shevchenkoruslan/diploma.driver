@@ -1,0 +1,2 @@
+enum AuthStatus { NOT_LOGGED_IN, NOT_DETERMINED, LOGGED_IN }
+enum FormType { SIGN_IN, SIGN_UP, RESET }
